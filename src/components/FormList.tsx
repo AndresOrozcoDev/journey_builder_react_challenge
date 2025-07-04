@@ -7,16 +7,17 @@ type FormListPorps = {
 
 
 const FormList = ({ rows, onAction }: FormListPorps) => {
+
   return (
     <div className="w-full bg-white rounded-lg shadow-lg overflow-auto">
       <table className="w-full table-auto border border-gray-400 border-collapse">
         <thead>
-          <tr>
-            <th className="border px-4 py-2">Formulario</th>
-            <th className="border px-4 py-2">Campo</th>
-            <th className="border px-4 py-2">Prefill desde</th>
-            <th className="border px-4 py-2">Editar</th>
-            <th className="border px-4 py-2">Eliminar</th>
+          <tr className="bg-neutral-200">
+            <th className="border px-4 py-2">Form</th>
+            <th className="border px-4 py-2">Field</th>
+            <th className="border px-4 py-2">Prefill</th>
+            <th className="border px-4 py-2">Edit</th>
+            <th className="border px-4 py-2">Delete</th>
           </tr>
         </thead>
         <tbody>
@@ -24,7 +25,7 @@ const FormList = ({ rows, onAction }: FormListPorps) => {
             <tr key={idx}>
               <td className="border px-4 py-2">{row.formName}</td>
               <td className="border px-4 py-2">
-                <span className="bg-gray-200 text-xs px-2 py-1 rounded font-mono">
+                <span className="bg-gray-100 text-xs px-2 py-1 rounded font-mono">
                   {row.fieldName}
                 </span>
               </td>
@@ -42,14 +43,14 @@ const FormList = ({ rows, onAction }: FormListPorps) => {
               </td>
               <td className="border px-4 py-2 text-center">
                 {row.prefillFrom ? (
-                  <button onClick={() => onAction("edit", row)} className="text-yellow-600 hover:underline">✏️ Editar</button>
+                  <button type="button" onClick={(e) => {e.preventDefault(); onAction("edit", row)}} className="text-yellow-600 hover:underline" aria-label="Edit" title="Edit">✏️</button>
                 ) : (
-                  <button onClick={() => onAction("create", row)} className="text-blue-600 hover:underline font-medium">➕ Configurar</button>
+                  <button type="button" onClick={(e) => {e.preventDefault(); onAction("create", row)}} className="text-blue-600 hover:underline font-medium" aria-label="Create" title="Create">➕</button>
                 )}
               </td>
               <td className="border px-4 py-2 text-center">
                 {row.prefillFrom && (
-                  <button onClick={() => onAction("delete", row)} className="text-red-600 hover:underline">❌ Eliminar</button>
+                  <button type="button" onClick={(e) => {e.preventDefault(); onAction("delete", row)}} className="text-red-600 hover:underline" aria-label="Delete" title="Delete">❌</button>
                 )}
               </td>
             </tr>

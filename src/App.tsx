@@ -7,6 +7,8 @@ import { getFormFieldsWithPrefill } from './utils/graph';
 import Modal from "./components/Modal";
 import Loading from './components/Loader';
 import Toast from './components/Toast';
+import FormDelete from './components/FormDelete';
+import FormPrefill from './components/FormPrefill';
 
 type ActionType = "create" | "edit" | "delete" | null;
 
@@ -15,6 +17,7 @@ function App() {
   const [rows, setRows] = useState<FormFieldPrefillRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedRow, setSelectedRow] = useState<FormFieldPrefillRow | null>(null);
 
   useEffect(() => {
     GetActionBlueprintGraph()
@@ -32,8 +35,9 @@ function App() {
       });;
   }, []);
 
-  const handleAction = (type: ActionType) => {
+  const handleAction = (type: ActionType, row: FormFieldPrefillRow) => {
     setModalAction(type);
+    setSelectedRow(row);
   };
 
   const handleCloseModal = () => {
@@ -46,16 +50,27 @@ function App() {
 
       {loading ? (
         <Loading />
-      ) : error ? (
-        <Toast message={error} type="error" />
       ) : (
-        <FormList rows={rows} onAction={handleAction} />
+        <>
+          {error && <Toast message={error} type="error" />}
+
+          {rows.length === 0 ? (
+            <div className="w-full bg-white rounded-lg shadow-lg p-4 text-center">
+              <span className="text-gray-500 italic">No information available.</span>
+            </div>
+          ) : (
+            <FormList rows={rows} onAction={handleAction} />
+          )}
+        </>
       )}
 
       <Modal isOpen={modalAction !== null} onClose={handleCloseModal}>
-        <p className="text-lg font-semibold capitalize">
-          {modalAction}
-        </p>
+        {(modalAction === "create" || modalAction === "edit") && selectedRow && (
+          <FormPrefill row={selectedRow} onClose={handleCloseModal} />
+        )}
+        {modalAction === "delete" && selectedRow && (
+          <FormDelete row={selectedRow} onClose={handleCloseModal} />
+        )}
       </Modal>
 
     </div>

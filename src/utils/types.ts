@@ -89,3 +89,9 @@ export interface FormFieldPrefillRow {
         field: string;
     };
 }
+
+export interface FormOption {
+  formId: string;
+  formName: string;
+  fields: string[];
+}

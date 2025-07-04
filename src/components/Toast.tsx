@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 type ToastType = 'success' | 'warning' | 'error';
 
 type ToastProps = {
@@ -12,6 +14,15 @@ const toastStyles: Record<ToastType, string> = {
 };
 
 const Toast = ({ message, type = 'success' }: ToastProps) => {
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!visible) return null;
+
   return (
     <div className="fixed bottom-4 right-4 z-50">
       <div className={`border px-4 py-3 rounded-md shadow-md ${toastStyles[type]}`}>
