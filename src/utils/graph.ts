@@ -89,3 +89,58 @@ export function getFormFieldsWithPrefill(graph: GraphResponse): FormFieldPrefill
 
   return rows;
 }
+
+
+export function getUpstreamFormsWithFields(formId: string): { id: string; name: string; fields: string[] }[] {
+  if (!cachedGraph) return [];
+
+  const { forms, nodes, edges } = cachedGraph;
+
+  const formIdToNodeId = new Map<string, string>();
+  const nodeIdToFormId = new Map<string, string>();
+  for (const node of nodes) {
+    if (node.type === 'form') {
+      const formId = node.data.component_id;
+      formIdToNodeId.set(formId, node.id);
+      nodeIdToFormId.set(node.id, formId);
+    }
+  }
+
+  const nodeId = formIdToNodeId.get(formId);
+  if (!nodeId) return [];
+
+  // Encontrar nodos antecesores
+  const visited = new Set<string>();
+  const stack = [nodeId];
+  while (stack.length > 0) {
+    const current = stack.pop();
+    if (!current || visited.has(current)) continue;
+    visited.add(current);
+
+    const upstream = edges
+      .filter(e => e.target === current)
+      .map(e => e.source);
+
+    stack.push(...upstream);
+  }
+
+  visited.delete(nodeId); // quitar el nodo actual
+
+  // Mapear los nodos antecesores a formularios válidos con sus campos
+  const upstreamForms = Array.from(visited)
+    .map(nid => nodeIdToFormId.get(nid))
+    .filter((id): id is string => Boolean(id))
+    .map(formId => {
+      const form = forms.find(f => f.id === formId);
+      if (!form) return null;
+      const fields = Object.keys(form.field_schema?.properties || {});
+      return {
+        id: form.id,
+        name: form.name,
+        fields
+      };
+    })
+    .filter((f): f is { id: string; name: string; fields: string[] } => f !== null);
+
+  return upstreamForms;
+}

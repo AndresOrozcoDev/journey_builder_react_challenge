@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { GetActionBlueprintGraph } from './services/avantosApi';
 import FormList from './components/FormList';
 import type { FormFieldPrefillRow } from './utils/types';
-import { getFormFieldsWithPrefill } from './utils/graph';
+import { getFormFieldsWithPrefill, setGraph } from './utils/graph';
 import Modal from "./components/Modal";
 import Loading from './components/Loader';
 import Toast from './components/Toast';
@@ -22,6 +22,7 @@ function App() {
   useEffect(() => {
     GetActionBlueprintGraph()
       .then((data) => {
+        setGraph(data);
         const parsed = getFormFieldsWithPrefill(data);
         setRows(parsed);
         setError(null);

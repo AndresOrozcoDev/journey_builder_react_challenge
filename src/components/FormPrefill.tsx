@@ -1,11 +1,41 @@
+import { useEffect, useState } from "react";
 import type { FormFieldPrefillRow } from "../utils/types";
+import { getUpstreamFormsWithFields } from "../utils/graph";
 
 type FormPrefillPorps = {
-    row: FormFieldPrefillRow | null;
+    row: FormFieldPrefillRow;
     onClose: () => void;
 };
 
 const FormPrefill = ({ row, onClose }: FormPrefillPorps) => {
+    const [upstreamForms, setUpstreamForms] = useState<
+        { id: string; name: string; fields: string[] }[]
+    >([]);
+
+    const [selectedFormId, setSelectedFormId] = useState<string | undefined>();
+    const [selectedField, setSelectedField] = useState<string | undefined>();
+
+    useEffect(() => {
+        const forms = getUpstreamFormsWithFields(row.formId);
+        setUpstreamForms(forms);
+
+        if (row.prefillFrom) {
+            const matchedForm = forms.find(f => f.name === row.prefillFrom?.formName);
+
+            if (matchedForm) {
+                setSelectedFormId(matchedForm.id);
+                setSelectedField(row.prefillFrom.field);
+            }
+        } else {
+            setSelectedFormId(undefined);
+            setSelectedField(undefined);
+        }
+    }, [row.formId, row.prefillFrom]);
+
+
+    const availableFields =
+        upstreamForms.find(f => f.id === selectedFormId)?.fields || [];
+
     return (
         <div className="flex flex-col items-center gap-y-1">
             <h2 className='text-xl font-bold'>Prefill setting</h2>
@@ -29,11 +59,33 @@ const FormPrefill = ({ row, onClose }: FormPrefillPorps) => {
                 </div>
                 <div className="flex flex-col gap-y-2 w-[45%]">
                     <select
+                        className="px-2 py-1 border rounded w-full"
+                        value={selectedFormId}
+                        onChange={(e) => {
+                            setSelectedFormId(e.target.value);
+                            setSelectedField(undefined);
+                        }}
+                        disabled={upstreamForms.length === 0}
                     >
+                        <option value="">Select form</option>
+                        {upstreamForms.map((form) => (
+                            <option key={form.id} value={form.id}>
+                                {form.name}
+                            </option>
+                        ))}
                     </select>
                     <select
-                        className="px-2 py-1 border rounded w-40 text-sm"
+                        className="px-2 py-1 border rounded w-full"
+                        value={selectedField}
+                        onChange={(e) => setSelectedField(e.target.value)}
+                        disabled={!selectedFormId}
                     >
+                        <option value="">Select field</option>
+                        {availableFields.map((field) => (
+                            <option key={field} value={field}>
+                                {field}
+                            </option>
+                        ))}
                     </select>
                 </div>
             </div>
