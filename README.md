@@ -1,11 +1,11 @@
 # JOURNEY BUILER REACT CHALLENGE
 
 <p align="center">
-    <img src="https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB" />
-    <img src="https://img.shields.io/badge/Node.js-6DA55F?logo=node.js&logoColor=white" />
-    <img src="https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white" />
-    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?logo=tailwind-css&logoColor=white" />
-    <img src="https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white" />
+    <img src="https://img.shields.io/badge/React-19.1.0-20232a?logo=react&logoColor=%2361DAFB" />
+    <img src="https://img.shields.io/badge/Node.js-20.11.1-6DA55F?logo=node.js&logoColor=white" />
+    <img src="https://img.shields.io/badge/Vite-7.0.0-646CFF?logo=vite&logoColor=white" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-4.1.11-38B2AC?logo=tailwind-css&logoColor=white" />
+    <img src="https://img.shields.io/badge/TypeScript-5.8.3-007ACC?logo=typescript&logoColor=white" />
 </p>
 
 ## 🧠 Descripción
