@@ -54,7 +54,7 @@ Run server
     npm run dev
 ```
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```bash
 ├── App.tsx                  # Main page and global state controller
@@ -73,6 +73,9 @@ Run server
 ```
 
 ---
+
+> [!WARNING]
+> This challenge does not include any backend endpoints for modifying data. The edit and delete actions are simulated only at the interface level (React).
 
 ## Autor
 
