@@ -10,24 +10,24 @@
 
 ## 🧠 Descripción
 
-**Journey Builder** es una aplicación interactiva para visualizar y gestionar relaciones de *prefill* entre formularios dentro de un flujo tipo *wizard*, representado como un **grafo dirigido acíclico (DAG)**.
+**Journey Builder** is an interactive application for visualizing and managing *prefill* relationships between forms within a wizard-like flow, represented as a **Directed Acyclic Graph (DAG)**.
 
-Esta herramienta permite:
+This tool allows you to:
 
-- Ver todos los formularios y sus campos.
-- Detectar automáticamente campos con prefill configurado desde otro formulario.
-- Configurar o modificar relaciones de prefill válidas.
-- Asegurar que los formularios seleccionables como prefill estén correctamente conectados en el grafo.
+- View all forms and their fields.
+- Automatically detect fields with prefill configured from another form.
+- Configure or modify valid prefill relationships.
+- Ensure that forms selectable as prefill sources are properly connected in the graph.
 
 ---
 
-## ⚙️ Funcionalidad del grafo
+## ⚙️ Graph Functionality
 
-- Los formularios están representados como nodos (`nodes`) con conexiones (`edges`).
-- Solo se permiten relaciones de prefill desde formularios **antecesores** en el grafo (no cualquiera).
-- `graph.ts` contiene funciones clave como:
-  - `getFormFieldsWithPrefill(graph)` → devuelve la tabla de campos con posibles relaciones de prefill.
-  - `getUpstreamFormsWithFields(formId)` → devuelve formularios válidos que pueden hacer prefill en el actual.
+- Forms are represented as nodes (`nodes`) with connections (`edges`).
+- Prefill relationships are only allowed from **antecesores** forms in the graph (not just any form).
+- `graph.ts` contains key functions such as:
+  - `getFormFieldsWithPrefill(graph)` → returns the table of fields with possible prefill relationships.
+  - `getUpstreamFormsWithFields(formId)` → returns valid forms that can prefill the current one.
 
 ---
 
@@ -57,17 +57,26 @@ Run server
 ## 📁 Estructura del Proyecto
 
 ```bash
-    ├── App.tsx                   # Página principal y controlador de estado general
+├── App.tsx                  # Main page and global state controller
 ├── components/
-│   ├── FormList.tsx         # Tabla principal que lista los formularios y sus campos
-│   ├── FormPrefill.tsx      # Modal para crear/editar configuración de prefill
-│   ├── FormDelete.tsx       # Modal de confirmación para eliminar prefill
-│   ├── Modal.tsx            # Contenedor reutilizable de modal
-│   ├── Loader.tsx           # Spinner de carga
-│   └── Toast.tsx            # Componente de notificación de errores
+│   ├── FormList.tsx         # Table to list forms and fields
+│   ├── FormPrefill.tsx      # Form to manage Prefill settings
+│   ├── FormDelete.tsx       # Form to delete Prefill relationships
+│   ├── Modal.tsx            # Modal component
+│   ├── Loader.tsx           # Loading indicator component
+│   └── Toast.tsx            # Notification (toast) component
 ├── utils/
-│   ├── graph.ts             # Lógica para analizar el grafo y extraer relaciones de formularios y campos
-│   └── types.ts             # Tipos TypeScript para las entidades del grafo
+│   ├── graph.ts             # Graph logic and traversal utilities
+│   └── types.ts             # Type definitions and interfaces
 ├── services/
-│   └── avantosApi.ts        # Llamada mock a la API `GetActionBlueprintGraph`
+│   └── avantosApi.ts        # HTTP service to fetch Avantos data
 ```
+
+---
+
+## Autor
+
+**Andrés Orozco**
+
+- [GitHub](https://github.com/AndresOrozcoDev)
+- [LinkedIn](https://www.linkedin.com/in/andresorozcodev/)
