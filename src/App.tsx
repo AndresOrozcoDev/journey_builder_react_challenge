@@ -28,7 +28,7 @@ function App() {
         setError(null);
       })
       .catch((err) => {
-        const message = err instanceof Error ? err.message : "Error desconocido";
+        const message = err instanceof Error ? err.message : "Error";
         setError(`Error: ${message}`);
       })
       .finally(() => {
