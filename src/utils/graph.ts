@@ -6,6 +6,7 @@ export function setGraph(graph: GraphResponse) {
   cachedGraph = graph;
 }
 
+// Method to obtain the forms with their respective fields and their prefilled forms
 export function getFormFieldsWithPrefill(graph: GraphResponse): FormFieldPrefillRow[] {
   const { forms, nodes, edges } = graph;
 
@@ -90,7 +91,7 @@ export function getFormFieldsWithPrefill(graph: GraphResponse): FormFieldPrefill
   return rows;
 }
 
-
+// Method to obtain the possible prefill fields of ancestor forms
 export function getUpstreamFormsWithFields(formId: string): { id: string; name: string; fields: string[] }[] {
   if (!cachedGraph) return [];
 
@@ -109,7 +110,6 @@ export function getUpstreamFormsWithFields(formId: string): { id: string; name: 
   const nodeId = formIdToNodeId.get(formId);
   if (!nodeId) return [];
 
-  // Encontrar nodos antecesores
   const visited = new Set<string>();
   const stack = [nodeId];
   while (stack.length > 0) {
@@ -124,9 +124,8 @@ export function getUpstreamFormsWithFields(formId: string): { id: string; name: 
     stack.push(...upstream);
   }
 
-  visited.delete(nodeId); // quitar el nodo actual
+  visited.delete(nodeId);
 
-  // Mapear los nodos antecesores a formularios válidos con sus campos
   const upstreamForms = Array.from(visited)
     .map(nid => nodeIdToFormId.get(nid))
     .filter((id): id is string => Boolean(id))
