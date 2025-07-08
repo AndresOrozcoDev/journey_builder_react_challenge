@@ -4,10 +4,10 @@ import { getUpstreamFormsWithFields } from "../utils/graph";
 
 type FormPrefillPorps = {
     row: FormFieldPrefillRow;
-    onClose: () => void;
+    onSave: (updated: FormFieldPrefillRow) => void;
 };
 
-const FormPrefill = ({ row, onClose }: FormPrefillPorps) => {
+const FormPrefill = ({ row, onSave }: FormPrefillPorps) => {
     const [upstreamForms, setUpstreamForms] = useState<
         { id: string; name: string; fields: string[] }[]
     >([]);
@@ -31,6 +31,20 @@ const FormPrefill = ({ row, onClose }: FormPrefillPorps) => {
             setSelectedField(undefined);
         }
     }, [row.formId, row.prefillFrom]);
+
+    const handleSave = () => {
+        const selectedFormName = upstreamForms.find(f => f.id === selectedFormId)?.name;
+        const updatedRow: FormFieldPrefillRow = {
+            ...row,
+            prefillFrom: selectedFormId && selectedField
+                ? {
+                    formName: selectedFormName || "",
+                    field: selectedField
+                }
+                : undefined
+        };
+        onSave(updatedRow);
+    };
 
 
     const availableFields =
@@ -92,7 +106,7 @@ const FormPrefill = ({ row, onClose }: FormPrefillPorps) => {
 
             <div className="pt-4">
                 <button
-                    onClick={onClose}
+                    onClick={handleSave}
                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
                 >
                     Save

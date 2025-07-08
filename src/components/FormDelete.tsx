@@ -2,10 +2,10 @@ import type { FormFieldPrefillRow } from "../utils/types";
 
 type FormDeletePorps = {
     row: FormFieldPrefillRow;
-    onClose: () => void;
+    onDelete: (row: FormFieldPrefillRow) => void;
 };
 
-const FormDelete = ({ row, onClose }: FormDeletePorps) => {
+const FormDelete = ({ row, onDelete }: FormDeletePorps) => {
     return (
         <div className="flex flex-col items-center gap-y-1">
             <h2 className='text-xl font-bold'>Delete Prefill</h2>
@@ -23,7 +23,7 @@ const FormDelete = ({ row, onClose }: FormDeletePorps) => {
                 </span>
             </p>
             <div className="mt-4 space-x-2">
-                <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={onClose} title="Delete" aria-label="Delete">
+                <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => onDelete(row)} title="Delete" aria-label="Delete">
                     Delete
                 </button>
             </div>

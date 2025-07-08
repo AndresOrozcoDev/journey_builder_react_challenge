@@ -45,6 +45,16 @@ function App() {
     setModalAction(null);
   };
 
+  const handleSavePrefill = (updated: FormFieldPrefillRow) => {
+  console.log("Updating:", updated);
+  handleCloseModal();
+};
+
+  const handleDelete = (row: FormFieldPrefillRow) => {
+    console.log("Deleting:", row);
+    handleCloseModal();
+  };
+
   return (
     <div className='bg-neutral-100 h-dvh w-screen text-center px-4 py-6 flex flex-col gap-y-5'>
       <h2 className='text-xl font-bold'>Journey Builder</h2>
@@ -67,10 +77,10 @@ function App() {
 
       <Modal isOpen={modalAction !== null} onClose={handleCloseModal}>
         {(modalAction === "create" || modalAction === "edit") && selectedRow && (
-          <FormPrefill row={selectedRow} onClose={handleCloseModal} />
+          <FormPrefill row={selectedRow} onSave={handleSavePrefill} />
         )}
         {modalAction === "delete" && selectedRow && (
-          <FormDelete row={selectedRow} onClose={handleCloseModal} />
+          <FormDelete row={selectedRow} onDelete={handleDelete} />
         )}
       </Modal>
 
