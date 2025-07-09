@@ -8,6 +8,16 @@
     <img src="https://img.shields.io/badge/TypeScript-5.8.3-007ACC?logo=typescript&logoColor=white" />
 </p>
 
+## 🎥 Presentation
+
+![video](assets/video.mp4)
+
+> [!TIP]
+> The demo video is available directly in this repository at `assets/videos/presentation.mkv`.  
+Due to the video's length and the fact that my YouTube account is not yet verified, I was unable to upload it to the platform.
+
+---
+
 ## 🧠 Descripción
 
 **Journey Builder** is an interactive application for visualizing and managing *prefill* relationships between forms within a wizard-like flow, represented as a **Directed Acyclic Graph (DAG)**.
